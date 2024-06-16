@@ -6,6 +6,7 @@ module.exports = {
       animation: {
         fade: 'fadeOut .3s ease-in-out',
         scaleUp: 'scaleUp .3s ease-out',
+        scaleUp2: 'scaleUp2 .5s ease-out',
       },
       keyframes: theme => ({
         fadeOut: {
@@ -14,6 +15,10 @@ module.exports = {
         },
         scaleUp: {
           '0%': { transform: 'scale(0.9)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        scaleUp2: {
+          '0%': { transform: 'scale(0.5)' },
           '100%': { transform: 'scale(1)' },
         },
       }),

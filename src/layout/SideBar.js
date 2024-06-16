@@ -9,9 +9,6 @@ function SideBar({ isOpen, toggleNav }) {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } sm:relative sm:translate-x-0 sm:w-2/12 md:w-fit p-3 hidden sm:flex`}
     >
-      <button onClick={toggleNav} className="self-end p-2">
-        Fechar
-      </button>
       <BtnLink icon={<HiHome />} text={'Início'} to={'/'} />
       <BtnLink icon={<HiUserGroup />} text={'Clientes'} to={'/clientes'} />
     </nav>

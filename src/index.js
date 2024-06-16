@@ -7,6 +7,8 @@ import ModalContainer from './ModalContainer';
 import { ModalProvider } from './ModalContext';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Clientes from './pages/Clientes';
+import { ToastContainer } from 'react-toastify';
+import 'react-tooltip/dist/react-tooltip.css'
 
 const router = (
   <BrowserRouter>
@@ -24,6 +26,7 @@ root.render(
   <ModalProvider>
     <React.StrictMode>
       {router}
+      <ToastContainer/>
     </React.StrictMode>
   </ModalProvider>
 );

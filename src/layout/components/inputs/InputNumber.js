@@ -6,7 +6,7 @@ function InputText({ placeholder, value, onChange, onKeyPress, ref, className })
             <label className='text-sm'>{placeholder}</label>
             <input
                 className={`w-sm rounded-xl focus:border-teal-600 p-2 text-neutral-500 border-2 border-neutral-300 ${className}`}
-                type="text"
+                type="number"
                 value={value}
                 onChange={onChange}
                 onKeyPress={onKeyPress}

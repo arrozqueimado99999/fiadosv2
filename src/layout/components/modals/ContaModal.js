@@ -1,5 +1,9 @@
 import { serverTimestamp } from "firebase/firestore";
 import { useState } from "react";
+import InputText from '../inputs/InputText';
+import BtnSolid from '../buttons/BtnSolid';
+import {HiSave} from 'react-icons/hi';
+import Toggle from "../inputs/Toggle";
 
 const ContaModal = ({ clienteId, handleCreateConta }) => {
     const [inputDesc, setInputDesc] = useState('');
@@ -15,33 +19,30 @@ const ContaModal = ({ clienteId, handleCreateConta }) => {
     };
   
     return (
-      <div className='modalContent'>
-        <input
+      <div className='h-full'>
+        <p className="text-xl font-black">Criar conta</p>
+        <InputText
           placeholder='Descrição'
-          type="text"
           value={inputDesc}
           onChange={(e) => setInputDesc(e.target.value)}
         />
   
-        <input
+        <InputText
           placeholder='Valor'
           type="number"
           value={inputValor}
           onChange={(e) => setInputValor(e.target.value)}
         />
-  
-          <input type="checkbox" id="checkboxInput"
+          <Toggle
           checked={inputPago}
-          onChange={(e) => setInputPago(e.target.checked)}
+          change={(e) => setInputPago(e.target.checked)}
           />
-          <label for="checkboxInput" class="toggleSwitch">
-          </label>
-  
-          <input type='date' onChange={(e) => setInputData(e.target.value)}>
-          </input>
-        <button className='outline' onClick={handleSubmit}>
-          Criar conta
-        </button>
+
+        <BtnSolid
+        text={'Criar'}
+        icon={<HiSave/>}
+        click={handleSubmit}
+        />
       </div>
     );
   };

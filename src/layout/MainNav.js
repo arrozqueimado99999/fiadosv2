@@ -17,7 +17,6 @@ function MainNav() {
           <BtnSolid icon={<HiMenu />} click={toggleNav} />
         </span>
       </nav>
-      <SideBar isOpen={isNavOpen} toggleNav={toggleNav} />
     </div>
   );
 }
