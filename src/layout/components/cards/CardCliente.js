@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { HiPlusCircle, HiOutlineTrash, HiCurrencyDollar, HiArrowRight } from "react-icons/hi";
 import { deleteCliente, getClienteById } from "../../../model/cliente";
 import { createConta, deleteConta, listContas, marcarComoPago } from '../../../model/conta';
-import BtnSolid from "../buttons/BtnSolid";
 import BtnAlpha from '../buttons/BtnAlpha.js';
 import ContaModal from "../modals/ContaModal";
 import { toast } from "react-toastify";
@@ -33,17 +32,21 @@ function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) 
   };
 
   return (
-    <div className='flex animate-scaleUp hover:drop-shadow-lg duration-75 drop-shadow-md flex-col w-full rounded-xl h-fit bg-white'>
+    <div className='flex animate-scaleUp hover:drop-shadow-lg group duration-75 drop-shadow-md flex-col w-full rounded-xl h-fit bg-white'>
       <div className='flex p-2 justify-between items-center'>
         <p className='text-lg text-bold pl-2 font-bold'>{cliente && cliente.nome}</p>
-        <div className='flex gap-2'>
+        <div className='flex opacity-0 duration-100 scale-95 gap-2 group-hover:opacity-100 group-hover:scale-100'>
           <BtnAlpha
+            id="delete-cliente"
             icon={<HiOutlineTrash />}
             click={() => deleteCliente(clienteId)}
+            tooltip={'Excluir cliente'}
           />
           <BtnAlpha
+            id="create-conta"
             click={() => openModal(<ContaModal clienteId={clienteId} handleCreateConta={handleCreateConta} />)}
             icon={<HiPlusCircle />}
+            tooltip={'Criar conta'}
           />
         </div>
       </div>
@@ -53,12 +56,26 @@ function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) 
         </nav>
         <div className='px-2'>
           {contas && contas.map((conta, i) => (
-            <div className={`conta ${conta.pago ? 'bg-green-500' : 'bg-red-500'} flex justify-between items-center p-2`} key={i}>
-              <p>{conta.descricao}</p>
+            <div className={`${conta.pago ? 'text-black' : 'text-red-500'} flex justify-between items-center p-1 group`}>
+              <p className="text-sm">{conta.descricao}</p>
               <div className='flex gap-2 items-center'>
-                <p>{"R$" + conta.valor}</p>
-                <BtnAlpha icon={<HiCurrencyDollar/>} click={() => marcarComoPago(conta.id, clienteId, setContas)}/>
-                <BtnAlpha icon={<HiOutlineTrash/>}click={() => deleteConta(conta.id, setStoredValues, setContas)}/>
+                <span>
+                  <p className="text-sm">{"R$" + conta.valor}</p>
+                </span>
+                <div className="flex opacity-0 group-hover:opacity-100">
+                  <BtnAlpha 
+                    id={`mark-paid-${i}`}
+                    icon={<HiCurrencyDollar/>} 
+                    click={() => marcarComoPago(conta.id, clienteId, setContas)} 
+                    tooltip={"Marcar como pago"}
+                  />
+                  <BtnAlpha 
+                    id={`delete-conta-${i}`}
+                    icon={<HiOutlineTrash/>} 
+                    click={() => deleteConta(conta.id, setStoredValues, setContas)} 
+                    tooltip={"Excluir conta"}
+                  />
+                </div>
               </div>
             </div>
           ))}
@@ -68,9 +85,11 @@ function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) 
         <div className={`saldo ${saldos && saldos < 0 ? 'text-red-500' : 'text-green-500'} text-lg font-bold`}>
           <p className='text-sm'>Saldo: {saldos}</p>
         </div>
-        <button className='btnDisc' onClick={() => console.log('Arrow button clicked')}>
-          <HiArrowRight />
-        </button>
+        <BtnAlpha
+          id="ver-mais"
+          icon={<HiArrowRight />}
+          text={'Ver mais'}
+        />
       </div>
     </div>
   );
