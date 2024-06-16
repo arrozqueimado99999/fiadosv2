@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { HiPlusCircle, HiOutlineTrash, HiCurrencyDollar, HiArrowRight } from "react-icons/hi";
+import React, { useEffect, useState } from 'react';
+import { HiPlusCircle, HiOutlineTrash, HiCurrencyDollar, HiArrowRight } from 'react-icons/hi';
 import { deleteCliente, getClienteById } from "../../../model/cliente";
 import { createConta, deleteConta, listContas, marcarComoPago } from '../../../model/conta';
 import BtnAlpha from '../buttons/BtnAlpha.js';
 import ContaModal from "../modals/ContaModal";
 import { toast } from "react-toastify";
 import { useModal } from '../../../ModalContext';
+import DropdownCliente from '../dropdown/DropdownCliente'; // Corrigido aqui
+import BtnSolid from '../buttons/BtnSolid.js';
+import BtnOption from '../buttons/BtnOption.js';
 
-function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) {
+const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) => {
   const [cliente, setCliente] = useState(null);
   const { isOpen, modalContent, openModal, closeModal } = useModal();
 
@@ -36,18 +39,28 @@ function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) 
       <div className='flex p-2 justify-between items-center'>
         <p className='text-lg text-bold pl-2 font-bold'>{cliente && cliente.nome}</p>
         <div className='flex opacity-0 duration-100 scale-95 gap-2 group-hover:opacity-100 group-hover:scale-100'>
-          <BtnAlpha
-            id="delete-cliente"
-            icon={<HiOutlineTrash />}
-            click={() => deleteCliente(clienteId)}
-            tooltip={'Excluir cliente'}
-          />
-          <BtnAlpha
+        <BtnSolid
             id="create-conta"
             click={() => openModal(<ContaModal clienteId={clienteId} handleCreateConta={handleCreateConta} />)}
             icon={<HiPlusCircle />}
-            tooltip={'Criar conta'}
-          />
+            text={'Criar conta'}
+            />
+
+          <DropdownCliente          
+            options={[
+            <BtnOption
+              icon={<HiOutlineTrash />}
+              click={() => deleteCliente(clienteId)}
+              text={'Excluir Cliente'}
+            />,
+            <BtnOption
+              className={'text-red-400'}
+              icon={<HiOutlineTrash />}
+              click={() => deleteCliente(clienteId)}
+              text={'Excluir Cliente'}
+            />          
+          ]
+          }/>
         </div>
       </div>
       <div className='min-h-40'>
@@ -56,7 +69,7 @@ function CardCliente({ clienteId, contas, saldos, setContas, setStoredValues }) 
         </nav>
         <div className='px-2'>
           {contas && contas.map((conta, i) => (
-            <div className={`${conta.pago ? 'text-black' : 'text-red-500'} flex justify-between items-center p-1 group`}>
+            <div className={`${conta.pago ? 'text-black' : 'text-red-500'} flex justify-between items-center p-1 group`} key={i}>
               <p className="text-sm">{conta.descricao}</p>
               <div className='flex gap-2 items-center'>
                 <span>
