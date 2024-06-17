@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Main from './Main';
 import RootLayout from './layout/RootLayout';
-import ModalContainer from './ModalContainer';
 import { ModalProvider } from './ModalContext';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Clientes from './pages/Clientes';

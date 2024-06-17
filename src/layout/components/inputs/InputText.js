@@ -5,7 +5,7 @@ function InputText({ placeholder, value, onChange, onKeyPress, ref, className })
         <div className='flex flex-col'>
             <label className='text-sm'>{placeholder}</label>
             <input
-                className={`w-sm rounded-xl focus:border-teal-600 p-2 text-neutral-500 border-2 border-neutral-300 ${className}`}
+                className={`w-sm rounded-xl focus:border-teal-600 border-2 p-2 text-neutral-500 border-neutral-300 ${className}`}
                 type="text"
                 value={value}
                 onChange={onChange}

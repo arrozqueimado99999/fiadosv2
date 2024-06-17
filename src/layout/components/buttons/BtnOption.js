@@ -2,7 +2,7 @@ import React from 'react';
 import { Tooltip } from 'react-tooltip';
 
 const BtnOption = ({ icon, text, click, className }) => {
-  const buttonClasses = `btn-primary duration-75 flex w-full items-center text-neutral-800 gap-1 p-2 hover:bg-opacity-10 hover:bg-neutral-900 font-bold  ${className} ${text ? 'px-4' : ''}`;
+  const buttonClasses = `btn-primary duration-75 flex w-full items-center text-neutral-800 gap-1 p-2 hover:bg-opacity-10 hover:bg-neutral-500 font-bold  ${className} ${text ? 'px-4' : ''}`;
 
   return (
     <div>

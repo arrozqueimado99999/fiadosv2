@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tooltip } from 'react-tooltip';
 
-const BtnAlpha = ({ icon, text, click, tooltip, id }) => {
-  const buttonClasses = `btn-primary duration-75 btn-tooltip focus:scale-90 flex w-fit flex-row menu-item hover:bg-opacity-10 font-bold items-center text-neutral-800 gap-1 p-2 rounded-xl hover:bg-neutral-900 ${text ? 'px-4' : ''}`;
+const BtnOutline = ({ icon, text, click, tooltip, id }) => {
+  const buttonClasses = `btn-primary duration-75 btn-tooltip border-2 text-neutral-600 border-neutral-200 focus:scale-90 flex w-fit flex-row menu-item hover:bg-opacity-10 font-bold items-center gap-1 p-2 rounded-xl hover:bg-neutral-900 ${text ? 'px-4' : ''}`;
 
   return (
     <div>
@@ -11,7 +11,7 @@ const BtnAlpha = ({ icon, text, click, tooltip, id }) => {
         className={buttonClasses}
         data-tooltip-id={tooltip ? `tooltip-id-${id}` : ""}
       >
-        {icon && <span className="text-xl z-0">{icon}</span>}
+        {icon && <span className="text-xl ">{icon}</span>}
         {text && <span className="text-sm">{text}</span>}
       </button>
       {tooltip && (
@@ -23,4 +23,4 @@ const BtnAlpha = ({ icon, text, click, tooltip, id }) => {
   );
 };
 
-export default BtnAlpha;
+export default BtnOutline;

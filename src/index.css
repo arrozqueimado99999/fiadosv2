@@ -5,3 +5,7 @@
 body {
     font-family: "Poppins";
   }
+
+.conta-div:hover .dpd-conta-menu{
+  display: flex;
+}
