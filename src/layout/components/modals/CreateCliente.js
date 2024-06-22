@@ -24,9 +24,9 @@ const CreateCliente = () => {
     };
 
     return (
-        <div className="min-h-full w-full flex flex-col justify-center gap-3">
-            <p className="text-xl font-black">Criar cliente</p>
-            <div className="h-full">
+        <div className="min-h-full w-full flex flex-col items-center justify-center gap-3">
+            <p className="text-3xl py-8 font-black">Criar cliente</p>
+            <div className="h-full w-10/12">
                 <InputText 
                     type="text" 
                     value={inputNome}
@@ -35,7 +35,7 @@ const CreateCliente = () => {
                     placeholder="Nome"
                 />
             </div>
-            <nav className="h-fit flex justify-end">
+            <nav className="h-fit w-10/12 flex justify-end">
                 <BtnSolid 
                 click={handleCreateCliente}
                 text={"Criar"}

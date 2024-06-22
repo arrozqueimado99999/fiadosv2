@@ -19,30 +19,33 @@ const ContaModal = ({ clienteId, handleCreateConta }) => {
     };
   
     return (
-      <div className='h-full'>
-        <p className="text-xl font-black">Criar conta</p>
-        <InputText
-          placeholder='Descrição'
-          value={inputDesc}
-          onChange={(e) => setInputDesc(e.target.value)}
-        />
-  
-        <InputText
-          placeholder='Valor'
-          type="number"
-          value={inputValor}
-          onChange={(e) => setInputValor(e.target.value)}
-        />
+      <div className='min-h-full w-full flex flex-col items-center justify-center gap-3'>
+        <p className="text-3xl p-4 font-black">Criar conta</p>
+        <div className="h-full w-10/12 flex flex-col gap-2 items-center">
+          <InputText
+            placeholder='Descrição'
+            value={inputDesc}
+            onChange={(e) => setInputDesc(e.target.value)}
+          />    
+          <InputText
+            placeholder='Valor'
+            type="number"
+            value={inputValor}
+            onChange={(e) => setInputValor(e.target.value)}
+          />
           <Toggle
           checked={inputPago}
           change={(e) => setInputPago(e.target.checked)}
           />
+        </div>
 
-        <BtnSolid
-        text={'Criar'}
-        icon={<HiSave/>}
-        click={handleSubmit}
-        />
+          <nav className="h-fit w-10/12 flex justify-end">
+            <BtnSolid
+              text={'Criar'}
+              icon={<HiSave/>}
+              click={handleSubmit}
+            />
+          </nav>
       </div>
     );
   };
