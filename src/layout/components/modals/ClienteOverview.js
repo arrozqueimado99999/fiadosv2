@@ -4,7 +4,7 @@ import InputText from "../inputs/InputText";
 import BtnSolid from "../buttons/BtnSolid";
 import { useModal } from '../../../ModalContext';
 
-const CreateCliente = () => {
+const CreateOverview = () => {
     const [inputNome, setInputNome] = useState('');
     const [storedValues, setStoredValues] = useState([]);
     const [contas, setContas] = useState({});
@@ -45,4 +45,4 @@ const CreateCliente = () => {
     );
 };
 
-export default CreateCliente;
+export default CreateOverview;

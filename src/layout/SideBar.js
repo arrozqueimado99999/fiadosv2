@@ -8,7 +8,7 @@ function SideBar({ isOpen, toggleNav }) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-64 h-full bg-white drop-shadow-md flex-col flex gap-2 items-center justify-start transition-transform duration-300 ${
+      className={`fixed top-0 left-0 w-72 h-full bg-white drop-shadow-md flex-col flex gap-2 items-center justify-start transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } sm:relative sm:translate-x-0 sm:w-2/12 md:w-fit p-3 z-50 sm:flex`}
     >

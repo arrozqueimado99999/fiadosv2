@@ -2,7 +2,7 @@ import React from 'react';
 import { Tooltip } from 'react-tooltip';
 
 const BtnAlpha = ({ icon, text, click, tooltip, id }) => {
-  const buttonClasses = `btn-primary duration-75 btn-tooltip focus:scale-90 flex w-fit flex-row menu-item hover:bg-opacity-10 font-bold items-center text-neutral-800 gap-1 p-2 rounded-xl hover:bg-neutral-900 ${text ? 'px-4' : ''}`;
+  const buttonClasses = `btn-primary duration-75 btn-tooltip focus:scale-90 flex w-fit flex-row menu-item hover:bg-opacity-10 font-bold items-center text-neutral-800 gap-1 p-2 rounded-full hover:bg-neutral-900 ${text ? 'px-4' : ''}`;
 
   return (
     <div>

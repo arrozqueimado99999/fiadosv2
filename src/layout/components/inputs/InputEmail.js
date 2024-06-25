@@ -2,10 +2,10 @@ import React from 'react';
 
 function InputEmail({ placeholder, value, onChange, onKeyPress, ref, className }) {
     return (
-        <div className='flex flex-col'>
+        <div className='flex flex-col w-full'>
             <label className='text-sm'>{placeholder}</label>
             <input
-                className={`w-sm rounded-xl focus:border-teal-600 border-2 p-2 text-neutral-500 border-neutral-300 ${className}`}
+                className={`w-sm rounded-xl w-full focus:outline-none focus:border-teal-600 border-2 p-2 text-neutral-500 border-neutral-300 ${className}`}
                 type="email"
                 value={value}
                 onChange={onChange}

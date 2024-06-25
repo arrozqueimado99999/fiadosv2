@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { HiPlusCircle, HiChevronDown, HiOutlineTrash, HiCurrencyDollar, HiArrowRight, HiChevronRight, HiMenu } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom'; // useNavigate no lugar de useHistory
+import { HiPlusCircle, HiChevronDown, HiOutlineTrash, HiCurrencyDollar, HiChevronRight, HiMenu } from 'react-icons/hi';
 import { deleteCliente, getClienteById } from "../../../model/cliente";
 import { createConta, deleteConta, listContas, marcarComoPago } from '../../../model/conta';
 import BtnAlpha from '../buttons/BtnAlpha.js';
 import ContaModal from "../modals/ContaModal";
 import { toast } from "react-toastify";
 import { useModal } from '../../../ModalContext';
-import DropdownCliente from '../dropdown/DropdownCliente'; // Corrigido aqui
-import BtnSolid from '../buttons/BtnSolid.js';
+import DropdownCliente from '../dropdown/DropdownCliente';
 import BtnOption from '../buttons/BtnOption.js';
 import BtnOutline from '../buttons/BtnOutline.js';
 
 const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) => {
   const [cliente, setCliente] = useState(null);
   const { isOpen, modalContent, openModal, closeModal } = useModal();
+  const navigate = useNavigate(); // Uso do useNavigate
 
   useEffect(() => {
     const fetchCliente = async () => {
@@ -35,34 +36,37 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
     }
   };
 
+  const handleVerMais = () => {
+    navigate(`/clientes/${clienteId}`);
+  };
+
   return (
-    <div className='flex animate-scaleUp hover:drop-shadow-lg group duration-75 drop-shadow-md flex-col w-full rounded-xl h-fit bg-white'>
+    <div className='flex animate-scaleUp hover:shadow-lg hover:shadow-gray-200 group duration-75 border-2 border-neutral-200 flex-col w-full rounded-xl h-fit bg-white'>
       <div className='flex p-2 justify-between items-center'>
-        <p className='text-lg text-bold pl-2 font-bold'>{cliente && cliente.nome}</p>
+        <p className='text-lg font-bold pl-2'>{cliente && cliente.nome}</p>
         <div className='flex xl:opacity-0 duration-100 scale-95 gap-2 xl:group-hover:opacity-100 xl:group-hover:scale-100'>
-        <BtnOutline
+          <BtnOutline
             id="create-conta"
             click={() => openModal(<ContaModal clienteId={clienteId} handleCreateConta={handleCreateConta} />)}
             icon={<HiPlusCircle />}
             text={'Criar conta'}
-            />
-
+          />
           <DropdownCliente 
-            icon={<HiMenu/>}          
+            icon={<HiMenu />}          
             options={[
-            <BtnOption
-              icon={<HiOutlineTrash />}
-              click={() => deleteCliente(clienteId)}
-              text={'Excluir Cliente'}
-            />,
-            <BtnOption
-              className={'text-red-400'}
-              icon={<HiOutlineTrash />}
-              click={() => deleteCliente(clienteId)}
-              text={'Excluir Cliente'}
-            />          
-          ]
-          }/>
+              <BtnOption
+                icon={<HiOutlineTrash />}
+                click={() => deleteCliente(clienteId)}
+                text={'Excluir Cliente'}
+              />,
+              <BtnOption
+                className={'text-red-400'}
+                icon={<HiOutlineTrash />}
+                click={() => deleteCliente(clienteId)}
+                text={'Excluir Cliente'}
+              />          
+            ]}
+          />
         </div>
       </div>
       <div className='min-h-40'>
@@ -78,24 +82,25 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
                   <p className="text-sm">{"R$" + conta.valor}</p>
                 </span>
                 <div className="flex opacity-0 group-hover:opacity-100">
-                <span className='hidden dpd-conta-menu'>
-                  <DropdownCliente
-                    icon={<HiChevronDown/>}          
-                    options={[
-                    <BtnOption 
-                      id={`mark-paid-${i}`}
-                      icon={<HiCurrencyDollar/>} 
-                      click={() => marcarComoPago(conta.id, clienteId, setContas)} 
-                      text={'Marcar como pago'}
-                    />,
-                    <BtnOption 
-                      id={`delete-conta-${i}`}
-                      icon={<HiOutlineTrash/>} 
-                      click={() => deleteConta(conta.id, setStoredValues, setContas)} 
-                      text={'Excluir conta'}
+                  <span className='hidden dpd-conta-menu'>
+                    <DropdownCliente
+                      icon={<HiChevronDown />}          
+                      options={[
+                        <BtnOption 
+                          id={`mark-paid-${i}`}
+                          icon={<HiCurrencyDollar />} 
+                          click={() => marcarComoPago(conta.id, clienteId, setContas)} 
+                          text={'Marcar como pago'}
+                        />,
+                        <BtnOption 
+                          id={`delete-conta-${i}`}
+                          icon={<HiOutlineTrash />} 
+                          click={() => deleteConta(conta.id, setStoredValues, setContas)} 
+                          text={'Excluir conta'}
+                        />
+                      ]}
                     />
-                    ]}/>
-                </span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -110,6 +115,7 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
           id="ver-mais"
           icon={<HiChevronRight />}
           text={'Ver Mais'}
+          click={handleVerMais} // Adiciona o handler ao click do botão
         />
       </div>
     </div>
