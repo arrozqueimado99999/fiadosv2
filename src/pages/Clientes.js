@@ -3,7 +3,7 @@ import '../index.css';
 import '../firebaseConfig.js';
 import { HiOutlineUserAdd } from "react-icons/hi";
 import { useModal } from '../ModalContext.js';
-import { listClientes } from '../model/cliente.js';
+import { listClientes, listClientesComUltimasContas } from '../model/cliente.js';
 import 'react-toastify/dist/ReactToastify.css';
 import CardCliente from '../layout/components/cards/CardCliente.js';
 import BtnSolid from '../layout/components/buttons/BtnSolid.js';

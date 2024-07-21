@@ -1,16 +1,17 @@
-import { getFirestore, addDoc, updateDoc, collection, deleteDoc, doc, query, where, getDocs, serverTimestamp, getDoc } from "firebase/firestore";
+import { getFirestore, addDoc, updateDoc, collection, deleteDoc, doc, query, where, getDocs, getDoc, orderBy, limit } from "firebase/firestore";
 import { listClientes } from "./cliente";
 
 const db = getFirestore();
 
-export const createConta = async (descricao, valor, pago, clienteId) => {
+export const createConta = async (descricao, valor, pago, clienteId, dataCriacao) => {
+  const dataCriacaoTimestamp = dataCriacao ? new Date(dataCriacao) : new Date();
 
   await addDoc(collection(db, "contas"), {
     descricao,
     valor: parseFloat(valor),
     pago,
     clienteId,
-    dataCriacao: serverTimestamp()
+    dataCriacao: dataCriacaoTimestamp
   });
 };
 
@@ -56,4 +57,19 @@ export const buscarContasPorCliente = async (clienteId) => {
     contasArray.push({ id: doc.id, ...doc.data() });
   });
   return { [clienteId]: contasArray };
+};
+
+export const buscarUltimasContas = async (clienteId) => {
+  const q = query(
+    collection(db, "contas"),
+    where("clienteId", "==", clienteId),
+    orderBy("dataCriacao", "desc"),
+    limit(3)
+  );
+  const querySnapshot = await getDocs(q);
+  const contasArray = [];
+  querySnapshot.forEach((doc) => {
+    contasArray.push({ id: doc.id, ...doc.data() });
+  });
+  return contasArray;
 };

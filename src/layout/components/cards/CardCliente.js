@@ -69,42 +69,20 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
           />
         </div>
       </div>
-      <div className='min-h-40'>
-        <nav className='nav'>
-          <p className="text-sm pl-4 text-neutral-400">Contas recentes:</p>
-        </nav>
-        <div className='px-2'>
-          {contas && contas.map((conta, i) => (
-            <div className={`${conta.pago ? 'text-black' : 'text-red-500'} flex conta-div h-10 z-0 justify-between items-center p-1 group`} key={i}>
-              <p className="text-sm">{conta.descricao}</p>
-              <div className='flex gap-2 items-center'>
-                <span>
-                  <p className="text-sm">{"R$" + conta.valor}</p>
-                </span>
-                <div className="flex opacity-0 group-hover:opacity-100">
-                  <span className='hidden dpd-conta-menu'>
-                    <DropdownCliente
-                      icon={<HiChevronDown />}          
-                      options={[
-                        <BtnOption 
-                          id={`mark-paid-${i}`}
-                          icon={<HiCurrencyDollar />} 
-                          click={() => marcarComoPago(conta.id, clienteId, setContas)} 
-                          text={'Marcar como pago'}
-                        />,
-                        <BtnOption 
-                          id={`delete-conta-${i}`}
-                          icon={<HiOutlineTrash />} 
-                          click={() => deleteConta(conta.id, setStoredValues, setContas)} 
-                          text={'Excluir conta'}
-                        />
-                      ]}
-                    />
-                  </span>
-                </div>
+      <div className='w-full'>
+        <div className='grid grid-cols-2 p-2 gap-2 min-h-40 w-full h-full'>
+          <div className='rounded-2xl bg-purple-400'>
+            wecrewvc
+          </div>
+          <div className='grid grid-rows-2 gap-2 h-full w-full'>
+              <div className='rounded-2xl bg-purple-400'>
+                wecrewvc
               </div>
-            </div>
-          ))}
+              <div className='rounded-2xl grid grid-cols-2 gap-2'>
+                <div className='bg-red-500 rounded-2xl'></div>
+                <div className='bg-red-500 rounded-2xl'></div>
+              </div>
+          </div>
         </div>
       </div>
       <div className='flex py-2 px-4 border-t-2 drop-shadow-sm border-neutral-200 justify-between items-center'>

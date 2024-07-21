@@ -6,11 +6,12 @@ import {HiSave} from 'react-icons/hi';
 import Toggle from "../inputs/Toggle";
 import InputEmail from "../inputs/InputEmail";
 import InputReal from "../inputs/InputReal";
+import InputData from "../inputs/InputData";
 
 const ContaModal = ({ clienteId, handleCreateConta }) => {
     const [inputDesc, setInputDesc] = useState('');
     const [inputValor, setInputValor] = useState('');
-    const [inputData, setInputData] = useState(serverTimestamp);
+    const [inputData, setInputData] = useState('');
     const [inputPago, setInputPago] = useState(false);
   
     const handleSubmit = () => {
@@ -38,6 +39,11 @@ const ContaModal = ({ clienteId, handleCreateConta }) => {
             <Toggle
             checked={inputPago}
             change={(e) => setInputPago(e.target.checked)}
+            />
+            <InputData
+            placeholder='Criado em'
+            value={inputData}
+            onChange={(e) => setInputData(e.target.value)}
             />
           </div>
         </div>
