@@ -1,13 +1,35 @@
-import { getFirestore, addDoc, collection, deleteDoc, doc, serverTimestamp, getDoc, query, where, orderBy, limit, getDocs, onSnapshot } from "firebase/firestore";
+import { getFirestore, addDoc, collection, deleteDoc, doc, serverTimestamp, getDoc, query, where, orderBy, limit, getDocs, onSnapshot, getCountFromServer } from "firebase/firestore";
 import { listContas } from "./conta";
 
 const db = getFirestore();
 
+const tailwindColors = [
+  'bg-red-200',
+  'bg-yellow-200',
+  'bg-green-200',
+  'bg-blue-200',
+  'bg-indigo-200',
+  'bg-purple-200',
+  'bg-pink-200',
+  // Adicione outras cores conforme necessário
+];
+
+const getRandomTailwindColor = () => {
+  const randomIndex = Math.floor(Math.random() * tailwindColors.length);
+  return tailwindColors[randomIndex];
+};
+
 export const createCliente = async (nome) => {
-  await addDoc(collection(db, "clientes"), {
-    nome,
-    dataCriacao: serverTimestamp()
-  });
+  try {
+    const color = getRandomTailwindColor();
+    await addDoc(collection(db, 'clientes'), {
+      nome,
+      color,
+    });
+    console.log("Cliente criado com sucesso!");
+  } catch (e) {
+    console.error("Erro ao adicionar cliente: ", e);
+  }
 };
 
 export const deleteCliente = async (id) => {
@@ -26,6 +48,16 @@ export const listClientes = (setStoredValues, setContas) => {
   });
 };
 
+export const listContasCount = async (clienteId, setContasCount) => {
+  const contasRef = collection(db, "contas");
+  const q = query(contasRef, where("clienteId", "==", clienteId));
+
+  const snapshot = await getCountFromServer(q);
+  setContasCount((prev) => ({
+    ...prev,
+    [clienteId]: snapshot.data().count,
+  }));
+};
 
 export const getClienteById = async (id) => {
   const clienteDoc = doc(db, "clientes", id);

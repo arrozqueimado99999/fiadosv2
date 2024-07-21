@@ -44,7 +44,7 @@ export function Clientes() {
         </div>
       </div>
 
-      <div className='pb-14 overflow-visible grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-full gap-5'>
+      <div className='pb-14 overflow-visible grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 w-full gap-5'>
         {storedValues.map((cliente, index) => (
           <CardCliente
             key={index}

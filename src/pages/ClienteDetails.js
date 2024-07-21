@@ -104,7 +104,7 @@ const ClienteDetails = () => {
         <h1 className='text-3xl font-extrabold'>{cliente.nome}</h1>
       </nav>
       <section className='grid h-full gap-4 grid-cols-2'>
-        <div className='bg-white shadow-md overflow-hidden rounded-xl h-full flex flex-col'>
+        <div className='bg-white shadow-md overflow-hidden rounded-2xl h-full flex flex-col'>
           <nav className='flex justify-between items-center p-4'>
             <p className='font-bold text-xl'>Contas</p>
             <div>
@@ -119,11 +119,10 @@ const ClienteDetails = () => {
           <div className='overflow-y-auto overflow-x-hidden no-scrollbar h-20 flex-grow relative'>
             <div ref={scrollContainerRef} className='overflow-y-auto overflow-x-hidden pt-0 p-4 no-scrollbar h-full flex-grow relative'>
               {contas && contas.map((conta, i) => (
-                <div className={`${conta.pago ? 'text-black' : 'text-red-500'} flex conta-div relative h-14 z-0 justify-between  items-center p-1 group`} key={i}>
-                  <div className='flex gap-2 items-center justify-center'>
+                <div className={`${conta.pago ? 'text-neutral-400 font-thin' : 'text-black font-semibold'} flex hover:bg-neutral-100 rounded-2xl cursor-pointer conta-div relative h-14 z-0 justify-between  items-center p-1 group`} key={i}>
+                  <div className='flex flex-col pl-2 items-start justify-center'>
                     <p className="text-sm">{conta.descricao}</p>
-                    <p className="text-sm">{formatDate(conta.dataCriacao)}</p>
-                    <div className='flex gap-2 items-center justify-center'></div>
+                    <p className="text-xs font-thin">Criada em {formatDate(conta.dataCriacao)}</p>
                   </div>
                   <div className='flex gap-2 items-center'>
                     <span>
@@ -151,7 +150,6 @@ const ClienteDetails = () => {
                       </span>
                     </div>
                   </div>
-                  <hr className=' w-full absolute bottom-0 border-neutral-300'/>
                 </div>
               ))}
             </div>

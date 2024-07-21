@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate no lugar de useHistory
-import { HiPlusCircle, HiChevronDown, HiOutlineTrash, HiCurrencyDollar, HiChevronRight, HiMenu } from 'react-icons/hi';
-import { deleteCliente, getClienteById } from "../../../model/cliente";
-import { createConta, deleteConta, listContas, marcarComoPago } from '../../../model/conta';
+import { useNavigate } from 'react-router-dom';
+import { HiPlusCircle, HiOutlineTrash, HiMenu } from 'react-icons/hi';
+import { deleteCliente, getClienteById, listContasCount } from "../../../model/cliente";
+import { createConta, listContas } from '../../../model/conta';
 import BtnAlpha from '../buttons/BtnAlpha.js';
 import ContaModal from "../modals/ContaModal";
 import { toast } from "react-toastify";
@@ -10,11 +10,14 @@ import { useModal } from '../../../ModalContext';
 import DropdownCliente from '../dropdown/DropdownCliente';
 import BtnOption from '../buttons/BtnOption.js';
 import BtnOutline from '../buttons/BtnOutline.js';
+import BtnSolid from '../buttons/BtnSolid.js';
+import BtnWhite from '../buttons/BtnWhite.js';
 
-const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) => {
+const CardCliente = ({ clienteId, contas, saldos, setContas }) => {
   const [cliente, setCliente] = useState(null);
   const { isOpen, modalContent, openModal, closeModal } = useModal();
-  const navigate = useNavigate(); // Uso do useNavigate
+  const navigate = useNavigate();
+  const [contasCount, setContasCount] = useState({});
 
   useEffect(() => {
     const fetchCliente = async () => {
@@ -23,12 +26,14 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
     };
 
     fetchCliente();
+    listContasCount(clienteId, setContasCount);
   }, [clienteId]);
 
   const handleCreateConta = async (clienteId, desc, valor, pago, data) => {
     try {
       await createConta(desc, valor, pago, clienteId, data);
       listContas(clienteId, setContas);
+      listContasCount(clienteId, setContasCount);
       toast.success('Conta criada com sucesso!', { position: 'bottom-right' });
     } catch (error) {
       console.error("Erro ao criar a conta: ", error);
@@ -41,11 +46,12 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
   };
 
   return (
-    <div className='flex animate-scaleUp hover:shadow-lg hover:shadow-gray-200 group duration-75 border-2 border-neutral-200 flex-col w-full rounded-xl h-fit bg-white'>
-      <div className='flex p-2 justify-between items-center'>
-        <p className='text-lg font-bold pl-2'>{cliente && cliente.nome}</p>
-        <div className='flex xl:opacity-0 duration-100 scale-95 gap-2 xl:group-hover:opacity-100 xl:group-hover:scale-100'>
-          <BtnOutline
+    <div className='flex animate-scaleUp p-2 hover:shadow-lg hover:shadow-gray-200 group duration-75 border-2 border-neutral-200 flex-col w-full rounded-3xl h-fit bg-white'>
+      <div 
+        className={`flex flex-col rounded-2xl aspect-square p-3 justify-between items-center ${cliente ? cliente.color : 'bg-transparent'}`} // Alterado aqui
+      >
+        <nav className='flex justify-between w-full xl:opacity-0 duration-100 scale-95 gap-2 xl:group-hover:opacity-100 xl:group-hover:scale-100'>
+          <BtnWhite
             id="create-conta"
             click={() => openModal(<ContaModal clienteId={clienteId} handleCreateConta={handleCreateConta} />)}
             icon={<HiPlusCircle />}
@@ -67,33 +73,32 @@ const CardCliente = ({ clienteId, contas, saldos, setContas, setStoredValues }) 
               />          
             ]}
           />
+        </nav>
+
+        <div className='w-full h-full gap-3 flex p-2 flex-col justify-end items-start'>
+          <p className='text-2xl font-bold'>{cliente && cliente.nome}</p>
+
+          <div className='grid grid-cols-3 gap-2 w-full'>
+            {contasCount[clienteId] > 0 ? (
+              <div className='border-2 border-transparent bg-neutral-700 text-white text-xs truncate flex justify-center py-1 px-3 rounded-full'>
+                {contasCount[clienteId]} Contas
+              </div>
+            ) : (
+              <div className='border-2 border-neutral-700 text-min font-bold truncate flex justify-center py-1 px-3 rounded-full'>
+                Sem contas
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className='w-full'>
-        <div className='grid grid-cols-2 p-2 gap-2 min-h-40 w-full h-full'>
-          <div className='rounded-2xl bg-purple-400'>
-            wecrewvc
-          </div>
-          <div className='grid grid-rows-2 gap-2 h-full w-full'>
-              <div className='rounded-2xl bg-purple-400'>
-                wecrewvc
-              </div>
-              <div className='rounded-2xl grid grid-cols-2 gap-2'>
-                <div className='bg-red-500 rounded-2xl'></div>
-                <div className='bg-red-500 rounded-2xl'></div>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div className='flex py-2 px-4 border-t-2 drop-shadow-sm border-neutral-200 justify-between items-center'>
+      <div className='flex py-3 pt-4 px-4 drop-shadow-sm justify-between items-center'>
         <div className={`saldo ${saldos && saldos < 0 ? 'text-red-500' : 'text-green-500'} text-lg font-bold`}>
           <p className='text-sm'>Saldo: {saldos}</p>
         </div>
-        <BtnAlpha
+        <BtnSolid
           id="ver-mais"
-          icon={<HiChevronRight />}
           text={'Ver Mais'}
-          click={handleVerMais} // Adiciona o handler ao click do botão
+          click={handleVerMais}
         />
       </div>
     </div>

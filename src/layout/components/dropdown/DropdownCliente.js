@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiChevronDown, HiDotsVertical, HiMenu } from 'react-icons/hi';
 import BtnAlpha from '../buttons/BtnAlpha';
+import BtnWhite from '../buttons/BtnWhite';
 
 function DropdownCliente({ options, icon }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ function DropdownCliente({ options, icon }) {
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <div className='z-0'>
-        <BtnAlpha
+        <BtnWhite
           icon={icon}
           click={toggleDropdown}
         />
