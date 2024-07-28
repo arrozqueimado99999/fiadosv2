@@ -1,62 +1,62 @@
-import { serverTimestamp } from "firebase/firestore";
-import { useState } from "react";
-import InputText from '../inputs/InputText';
-import BtnSolid from '../buttons/BtnSolid';
-import {HiSave} from 'react-icons/hi';
-import Toggle from "../inputs/Toggle";
-import InputEmail from "../inputs/InputEmail";
-import InputReal from "../inputs/InputReal";
-import InputData from "../inputs/InputData";
+import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
+import { getContaById, marcarComoPago } from "../../../model/conta";
+import Loading from "../../Loading";
+import BtnOutline from "../buttons/BtnOutline";
+import { HiCash, HiCurrencyDollar } from "react-icons/hi";
+import {toast} from "react-toastify";
+import BtnSolid from "../buttons/BtnSolid";
+import SimpleLoad from "../../SimpleLoad";
 
-const ContaOverview = ({ clienteId, handleCreateConta }) => {
-    const [inputDesc, setInputDesc] = useState('');
-    const [inputValor, setInputValor] = useState('');
-    const [inputData, setInputData] = useState('');
-    const [inputPago, setInputPago] = useState(false);
-  
-    const handleSubmit = () => {
-      handleCreateConta(clienteId, inputDesc, inputValor, inputPago, inputData);
-      setInputDesc('');
-      setInputValor('');
-      setInputPago(false);
+const ContaOverview = ({ contaId, setContas }) => {
+  const { id: clienteId } = useParams();
+  const [conta, setConta] = useState(null);
+
+  useEffect(() => {
+    const fetchContaData = async () => {
+      try {
+        const contaData = await getContaById(contaId);
+        setConta(contaData);
+      } catch (error) {
+        console.error("Erro ao buscar dados da conta: ", error);
+      }
     };
-  
-    return (
-      <div className='w-full p-4 flex flex-col items-center justify-center gap-3'>
-        <p className="text-3xl p-4 font-black">Criar conta</p>
-        <div className="h-full w-full flex flex-col gap-2 items-start">
-          <InputEmail
-            placeholder='Descrição'
-            value={inputDesc}
-            onChange={(e) => setInputDesc(e.target.value)}
-          />
-          <div className="flex w-full gap-2 items-end">
-            <InputReal
-              placeholder='Valor'
-              value={inputValor}
-              onChange={(e) => setInputValor(e.target.value)}
-            />
-            <Toggle
-            checked={inputPago}
-            change={(e) => setInputPago(e.target.checked)}
-            />
-            <InputData
-            placeholder='Criado em'
-            value={inputData}
-            onChange={(e) => setInputData(e.target.value)}
-            />
-          </div>
-        </div>
 
-          <nav className="h-fit w-full flex justify-end">
-            <BtnSolid
-              text={'Criar'}
-              icon={<HiSave/>}
-              click={handleSubmit}
-            />
-          </nav>
-      </div>
-    );
+    fetchContaData();
+  }, [contaId]);
+
+  const handleMarcarComoPago = async () => {
+    try {
+      await marcarComoPago(conta.id, clienteId, setContas);
+      const updatedConta = await getContaById(conta.id);
+      setConta(updatedConta);
+    } catch (error) {
+    toast.error("Erro ao marcar como pago");
+    }
   };
-  
-  export default ContaOverview;
+
+  return (
+    <div className='w-full p-3 flex flex-col relative items-center justify-center gap-3'>
+      {conta ? (
+        <>
+          <div className="flex justify-between items-center w-full">
+            <p className="text-xl">{conta.descricao}</p>
+            <div className={`${conta.pago ? 'bg-green-200' : 'bg-red-200'} px-3 py-2 flex rounded-2xl justify-center items-center gap-1`}>
+                <BtnSolid
+                  icon={<HiCurrencyDollar />}
+                  tooltip={'Marcar como pago'}
+                  click={handleMarcarComoPago}
+                />
+                <span className="text-md font-bold p-1">{conta.valor}</span>
+            </div>
+          </div>
+          <p className="text-xl p-2">Pago: {conta.pago ? "Sim" : "Não"}</p>
+        </>
+      ) : (
+        <SimpleLoad />
+      )}
+    </div>
+  );
+};
+
+export default ContaOverview;

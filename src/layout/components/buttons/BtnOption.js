@@ -9,7 +9,7 @@ const BtnOption = ({ icon, text, click, className }) => {
       <button
         onClick={click}
         className={buttonClasses}>
-        {icon && <span className="text-md">{icon}</span>}
+        {icon && <span className="text-lg">{icon}</span>}
         {text && <span className="text-sm font-normal truncate">{text}</span>}
       </button>
     </div>

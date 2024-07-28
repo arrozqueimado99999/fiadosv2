@@ -10,6 +10,7 @@ module.exports = {
         slideDown: 'slideDown .2s ease-in-out',
         slideLeft: 'slideLeft .2s ease-out',
         slideLeft2: 'slideLeft2 .2s ease-out',
+        bounceCustom: 'bounceCustom 1.4s infinite'
       },
       keyframes: theme => ({
         fadeOut: {
@@ -36,6 +37,10 @@ module.exports = {
           '0%': { transform: 'translateX(10px)' },
           '100%': { transform: 'translateX(0)'},
         },
+        bounceCustom: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-0.75rem)' },
+        }
       }),
     },
   },

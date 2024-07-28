@@ -11,6 +11,7 @@ function DropdownCliente({ options, icon }) {
     setIsOpen(!isOpen);
   };
 
+
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsOpen(false);

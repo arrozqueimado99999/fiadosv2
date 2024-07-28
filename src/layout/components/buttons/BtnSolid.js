@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BtnSolid = ({ icon, text, click }) => {
-  const buttonClasses = `btn-primary duration-75 flex flex-row focus:scale-90 w-fit menu-item font-semibold items-center text-white gap-1 p-2 rounded-full bg-neutral-700 hover:bg-teal-700 bg-blend-multiply ${text ? 'px-4' : ''}`;
+  const buttonClasses = `btn-primary duration-75 flex flex-row active:scale-90 w-fit menu-item font-semibold items-center text-white gap-1 p-2 rounded-full bg-neutral-700 hover:bg-teal-700 bg-blend-multiply ${text ? 'px-4' : ''}`;
 
   return (
     <button

@@ -4,7 +4,7 @@ import { HiPlusCircle, HiOutlineTrash, HiMenu } from 'react-icons/hi';
 import { deleteCliente, getClienteById, listContasCount } from "../../../model/cliente";
 import { createConta, listContas } from '../../../model/conta';
 import BtnAlpha from '../buttons/BtnAlpha.js';
-import ContaModal from "../modals/ContaModal";
+import ContaModal from "../modals/CreateConta.js";
 import { toast } from "react-toastify";
 import { useModal } from '../../../ModalContext';
 import DropdownCliente from '../dropdown/DropdownCliente';
@@ -46,7 +46,7 @@ const CardCliente = ({ clienteId, contas, saldos, setContas }) => {
   };
 
   return (
-    <div className='flex animate-scaleUp p-2 hover:shadow-lg hover:shadow-gray-200 group duration-75 border-2 border-neutral-200 flex-col w-full rounded-3xl h-fit bg-white'>
+    <div onDoubleClick={handleVerMais} className='flex animate-scaleUp p-2 hover:shadow-lg hover:shadow-gray-200 group duration-75 border-2 border-neutral-200 flex-col w-full rounded-3xl h-fit bg-white'>
       <div 
         className={`flex flex-col rounded-2xl aspect-square p-3 justify-between items-center ${cliente ? cliente.color : 'bg-transparent'}`} // Alterado aqui
       >
