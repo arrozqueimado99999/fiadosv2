@@ -39,7 +39,7 @@ module.exports = {
         },
         bounceCustom: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-0.75rem)' },
+          '50%': { transform: 'translateY(-2rem)' },
         }
       }),
     },
